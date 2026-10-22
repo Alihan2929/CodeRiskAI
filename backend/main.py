@@ -4,6 +4,7 @@ from zipfile import ZipFile, BadZipFile
 import shutil
 
 from fastapi import Body, FastAPI, File, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -16,6 +17,15 @@ except ImportError:
 
 ROOT = Path(__file__).resolve().parent.parent
 app = FastAPI(title="CodeRiskAI API", version="0.2.0")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 MAX_FILE_BYTES = 200 * 1024 * 1024
 MAX_TOTAL_BYTES = 500 * 1024 * 1024
 MAX_ZIP_FILES = 10000
