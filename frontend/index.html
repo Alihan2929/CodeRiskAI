@@ -48,7 +48,7 @@ tr.cur td{background:#142540;color:#fff}
 <div class="notice">Model C kodundan elde edilen (NASA JM1) metriklerle eğitildi. Java ve diğer diller için doğrudan tahmin üretmez; bu form model davranışını göstermek içindir. Sonuç doğrulanmış bir hata olasılığı değil, risk skorudur.</div></div></section>
 </main></div><div class="toast" id="toast"><b id="toastTitle">Bilgi</b><span id="toastText"></span></div>
 <script>
-const API_BASE="";
+const API_BASE = "https://coderiskai-api.onrender.com";
 const pages={overview:'Genel Bakış',analysis:'Kod Analizi',reports:'Raporlar',models:'Model ve Tahmin'};
 function navigate(name){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===name));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));document.getElementById('crumb').textContent=pages[name]||name;window.scrollTo({top:0,behavior:'smooth'})}
 document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.page)));document.getElementById('goScan').onclick=()=>navigate('analysis');
@@ -59,7 +59,7 @@ scan.onclick=async()=>{
  r.style.display='block'; msg.textContent='Analiz yapılıyor…'; scan.disabled=true; scan.textContent='Analiz ediliyor…';
  try {
    const form=new FormData(); selected.forEach(f=>form.append('files',f));
-   const response=await fetch('/api/analyze',{method:'POST',body:form});
+   const response=await fetch(API_BASE+'/api/analyze',{method:'POST',body:form});
    const data=await response.json();
    if(!response.ok) throw new Error(data.detail||'Analiz başarısız oldu.');
    msg.innerHTML='';
@@ -131,7 +131,6 @@ document.getElementById('predictBtn').onclick=runPredict;
 document.getElementById('resetBtn').onclick=()=>{fillInputs(null);lastActual=null;document.getElementById('predResult').style.display='none'};
 document.getElementById('sampleBtn').onclick=async()=>{
  try{const s=await api('/api/sample');fillInputs(s.metrics);await runPredict();lastActual=null;
-  // gerçek etiketi sonuç kutusuna ekle
   const box=document.getElementById('predResult');box.appendChild(el('div','Bu örneğin veri setindeki gerçek etiketi: '+(s.actual_defect?'Kusurlu':'Kusursuz'),'meter-note'))}
  catch(err){toast('Örnek yüklenemedi',err.message)}
 };
