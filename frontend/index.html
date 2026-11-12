@@ -1,144 +1,1318 @@
 <!doctype html>
-<html lang="tr">
+<html lang="tr" data-theme="dark">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>CodeRisk AI — Code Intelligence</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CodeRisk AI — Yazılım Kusur & Risk Analiz Platformu</title>
+<meta name="description" content="Kod kalitesi analizi ve yazılım kusur riski tahmini.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>
+  (function () {
+    var t = null;
+    try { t = localStorage.getItem('cr-theme'); } catch (e) {}
+    if (t !== 'light' && t !== 'dark') t = 'dark';
+    document.documentElement.setAttribute('data-theme', t);
+  })();
+</script>
 <style>
-:root{--bg:#0b1020;--panel:#111a2e;--panel2:#151f35;--line:#25324b;--text:#edf2ff;--muted:#8f9db8;--cyan:#5ce1e6;--blue:#6c8cff;--green:#48d6a1;--yellow:#ffca70;--red:#ff7187}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 70% -10%,#1c3156 0,transparent 40%),var(--bg);color:var(--text);font:14px/1.5 Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,sans-serif}button,input{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:248px 1fr;min-height:100vh}.sidebar{padding:25px 17px;border-right:1px solid var(--line);background:#0a1020d9;display:flex;flex-direction:column;gap:30px}.brand{display:flex;align-items:center;gap:11px;padding:0 8px}.logo{width:39px;height:39px;border-radius:12px;background:linear-gradient(135deg,var(--cyan),var(--blue));display:grid;place-items:center;color:#081322;font-weight:900;font-size:20px}.brand strong{font-size:16px;letter-spacing:.2px}.brand small{display:block;color:var(--muted);font-size:11px;margin-top:1px}.nav-label{color:#61708d;font-size:10px;font-weight:800;letter-spacing:1.5px;padding:0 12px;margin-bottom:7px}.nav{display:grid;gap:5px}.nav button{border:0;background:transparent;color:#9ba9c3;text-align:left;padding:11px 12px;border-radius:10px;display:flex;align-items:center;gap:12px}.nav button.active,.nav button:hover{background:#182742;color:#fff}.nav .ico{width:19px;text-align:center;font-size:16px}.side-bottom{margin-top:auto;border:1px solid var(--line);border-radius:13px;padding:14px;background:#101a2d}.side-bottom b{font-size:12px}.side-bottom p{color:var(--muted);font-size:11px;margin:7px 0 12px}.tinybar{height:4px;background:#26334a;border-radius:4px;overflow:hidden}.tinybar span{display:block;width:68%;height:100%;background:linear-gradient(90deg,var(--cyan),var(--blue))}.main{min-width:0;padding:26px clamp(18px,3vw,42px) 45px;max-width:1600px;width:100%;margin:auto}.topbar{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:28px}.crumb{color:var(--muted);font-size:12px}.crumb strong{color:var(--text);font-weight:600}.topright{display:flex;align-items:center;gap:12px}.status{display:flex;align-items:center;gap:7px;color:#a6b5ce;font-size:12px}.dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 10px #48d6a177}.avatar{width:34px;height:34px;border:1px solid #344563;border-radius:50%;display:grid;place-items:center;background:#1a2a45;font-weight:700}.heading{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin-bottom:24px}.eyebrow{color:var(--cyan);font-size:11px;text-transform:uppercase;letter-spacing:1.8px;font-weight:800}.heading h1{font-size:clamp(25px,3vw,35px);letter-spacing:-1px;margin:7px 0 5px}.heading p{color:var(--muted);margin:0;max-width:620px}.btn{border:1px solid #33425e;background:#182640;color:#eaf0ff;border-radius:10px;padding:10px 14px;font-weight:650;display:inline-flex;align-items:center;gap:8px}.btn:hover{filter:brightness(1.13)}.btn.primary{background:linear-gradient(120deg,#5ce1e6,#8c9cff);border:0;color:#091322}.btn:disabled{opacity:.5;cursor:not-allowed}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-bottom:18px}.card{background:linear-gradient(150deg,#131e33,#101829);border:1px solid var(--line);border-radius:15px;padding:18px;min-width:0;box-shadow:0 10px 28px #00000012}.metric-top{display:flex;align-items:center;justify-content:space-between;color:var(--muted);font-size:12px}.metric-icon{width:32px;height:32px;border-radius:9px;display:grid;place-items:center;background:#203149;color:var(--cyan);font-size:16px}.metric-num{font-size:29px;font-weight:750;letter-spacing:-.7px;margin:13px 0 4px}.metric-foot{color:var(--muted);font-size:11px}.metric-foot span{color:var(--green)}.content-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(300px,1fr);gap:16px;margin-bottom:16px}.section-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:17px}.section-head h2{font-size:15px;margin:0}.section-head p{font-size:11px;color:var(--muted);margin:4px 0 0}.pill{font-size:10px;font-weight:750;border-radius:6px;padding:5px 8px;background:#1c2c42;color:#9eb0cd;border:1px solid #2b3b55}.upload{border:1px dashed #3d5776;border-radius:12px;padding:22px 15px;text-align:center;background:#0c1527;transition:.2s}.upload.drag{border-color:var(--cyan);background:#12273a}.upload .upload-ico{font-size:27px;color:var(--cyan);margin-bottom:6px}.upload h3{font-size:14px;margin:4px 0}.upload p{font-size:11px;color:var(--muted);margin:0 0 13px}.file-list{display:grid;gap:8px;margin-top:13px}.file-item{display:flex;align-items:center;gap:10px;padding:10px;background:#111c30;border:1px solid #25334b;border-radius:9px}.file-symbol{width:31px;height:34px;border-radius:6px;background:#1a2c48;color:#7da9ff;display:grid;place-items:center;font-size:10px;font-weight:800}.file-meta{min-width:0;flex:1}.file-meta b{font-size:12px;display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.file-meta small{color:var(--muted);font-size:10px}.remove{border:0;background:transparent;color:#7788a4;font-size:18px}.empty-files{font-size:11px;color:#6e7e99;text-align:center;padding:12px}.scan-controls{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:15px}.hint{font-size:10px;color:var(--muted)}.chart-wrap{height:190px;display:flex;align-items:flex-end;gap:10px;padding:10px 4px 0;border-bottom:1px solid #27354d;position:relative}.chart-wrap:before,.chart-wrap:after{content:"";position:absolute;left:0;right:0;border-top:1px dashed #293750}.chart-wrap:before{top:30%}.chart-wrap:after{top:60%}.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;gap:7px;z-index:1}.bar{width:min(32px,75%);border-radius:6px 6px 2px 2px;background:linear-gradient(180deg,#66e0df,#5d7dff);min-height:4px;opacity:.9}.bar-col small{font-size:10px;color:var(--muted);margin-bottom:-22px;transform:translateY(24px)}.chart-legend{display:flex;gap:14px;margin-top:28px;color:var(--muted);font-size:10px}.legend-dot{display:inline-block;width:7px;height:7px;border-radius:2px;margin-right:5px}.risk-summary{display:flex;align-items:center;gap:22px;padding:6px 0 12px}.donut{width:128px;height:128px;border-radius:50%;background:conic-gradient(var(--red) 0 22%,var(--yellow) 22% 48%,var(--blue) 48% 75%,var(--green) 75% 100%);display:grid;place-items:center;flex-shrink:0;position:relative}.donut:after{content:"";position:absolute;inset:13px;border-radius:50%;background:#121c30}.donut-center{position:relative;z-index:1;text-align:center}.donut-center strong{font-size:23px;display:block}.donut-center small{font-size:10px;color:var(--muted)}.risk-legend{display:grid;gap:10px;flex:1}.risk-row{display:flex;align-items:center;gap:8px;font-size:11px;color:#b9c5d9}.risk-row .swatch{width:8px;height:8px;border-radius:3px}.risk-row strong{margin-left:auto;color:#edf2ff}.table-card{padding:0;overflow:hidden}.table-head{padding:18px 20px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line)}.table-head h2{font-size:15px;margin:0}.table-scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:640px}th{text-align:left;padding:12px 20px;color:#7585a2;font-size:10px;text-transform:uppercase;letter-spacing:.8px;font-weight:750;background:#0e1729}td{padding:14px 20px;border-top:1px solid #202d43;font-size:12px;color:#c4cfe1}td:first-child{color:#eef3ff;font-weight:600}.code-name{display:flex;align-items:center;gap:9px}.code-icon{width:27px;height:30px;border-radius:6px;background:#1b2b45;color:#88b4ff;display:grid;place-items:center;font-size:9px}.risk-badge{padding:5px 8px;border-radius:6px;font-size:10px;font-weight:750;white-space:nowrap}.high{color:#ff899b;background:#472433}.medium{color:#ffd081;background:#45351e}.low{color:#65e2b1;background:#153a34}.barline{height:5px;width:75px;background:#26334b;border-radius:5px;overflow:hidden;display:inline-block;vertical-align:middle;margin-right:7px}.barline span{height:100%;display:block;border-radius:5px;background:var(--red)}.empty-row{text-align:center;padding:30px;color:var(--muted)}.footer{display:flex;justify-content:space-between;gap:12px;margin-top:16px;color:#667792;font-size:10px}.toast{position:fixed;right:22px;bottom:22px;max-width:360px;background:#172840;border:1px solid #38516e;border-radius:12px;padding:14px 17px;box-shadow:0 12px 35px #0008;display:none;z-index:10}.toast.show{display:block;animation:up .2s ease}.toast b{display:block;font-size:12px;margin-bottom:3px}.toast span{color:#aab9d1;font-size:11px}@keyframes up{from{transform:translateY(8px);opacity:0}to{transform:none;opacity:1}}.page{display:none}.page.active{display:block}.notice{padding:11px 13px;border:1px solid #5a482b;background:#2b241a;color:#f4d49a;border-radius:9px;font-size:11px;margin-top:13px}.simple-panel{min-height:260px;display:grid;place-items:center;text-align:center;color:var(--muted)}.simple-panel h2{color:var(--text)}
-@media(max-width:1050px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.content-grid{grid-template-columns:1fr}.sidebar{width:210px}.app{grid-template-columns:210px 1fr}}@media(max-width:700px){.app{display:block}.sidebar{position:static;width:auto;padding:13px;border-right:0;border-bottom:1px solid var(--line);gap:13px}.brand{padding:0 4px}.nav-label,.side-bottom{display:none}.nav{display:flex;overflow:auto}.nav button{white-space:nowrap;padding:9px 10px}.main{padding:19px 13px 30px}.heading{align-items:flex-start;flex-direction:column}.topbar{margin-bottom:22px}.grid{gap:9px}.card{padding:14px}.metric-num{font-size:24px}.risk-summary{gap:14px}.donut{width:108px;height:108px}.footer{flex-direction:column}}
+:root, :root[data-theme="light"] {
+  --bg: #f8fafc;
+  --sidebar: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --surface-3: #e2e8f0;
+  --line: #e2e8f0;
+  --line-2: #cbd5e1;
+  --ink: #09090b;
+  --ink-2: #52525b;
+  --ink-3: #71717a;
+  --accent: #0284c7;
+  --accent-2: #4f46e5;
+  --accent-soft: rgba(2, 132, 199, 0.08);
+  --accent-ink: #0369a1;
+  --ok: #059669;
+  --ok-soft: rgba(5, 150, 105, 0.1);
+  --warn: #d97706;
+  --warn-soft: rgba(217, 119, 6, 0.1);
+  --bad: #e11d48;
+  --bad-soft: rgba(225, 29, 72, 0.1);
+  --hot: #ea580c;
+  --hot-soft: rgba(234, 88, 12, 0.1);
+  --shadow: 0 1px 3px rgba(0,0,0,0.04), 0 6px 24px -4px rgba(0,0,0,0.04);
+  --font: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --display: 'Space Grotesk', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  color-scheme: light;
+}
 
-.form-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}
-.field{display:grid;gap:4px}.field label{font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.4px}
-.field input{width:100%;background:#0c1527;border:1px solid #2b3b55;border-radius:8px;color:var(--text);padding:8px 10px;font-size:12px}
-.field input:focus{outline:none;border-color:var(--cyan)}
-.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
-.result-box{margin-top:18px;display:none;border:1px solid var(--line);border-radius:12px;padding:18px;background:#0f1a2e}
-.result-top{display:flex;gap:30px;flex-wrap:wrap;align-items:flex-end}
-.result-top small{display:block;color:var(--muted);font-size:10px;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}
-.big{font-size:38px;font-weight:800;letter-spacing:-1px;line-height:1.1}
-.meter{height:10px;background:#26334b;border-radius:8px;position:relative;margin-top:18px}
-.meter span{display:block;height:100%;border-radius:8px}
-.meter i{position:absolute;top:-4px;bottom:-4px;width:2px;background:#fff;opacity:.75}
-.meter-note{color:var(--muted);font-size:10px;margin-top:8px}
-.hbar{display:grid;grid-template-columns:120px 1fr 44px;align-items:center;gap:10px;font-size:11px;color:#b9c5d9;margin-bottom:9px}
-.hbar .track{height:8px;background:#26334b;border-radius:6px;overflow:hidden}
-.hbar .track span{display:block;height:100%;background:linear-gradient(90deg,#66e0df,#5d7dff);border-radius:6px}
-.hbar b{text-align:right;color:#edf2ff;font-weight:650}
-.mini-table table{min-width:0}.mini-table th,.mini-table td{padding:10px 12px}
-tr.cur td{background:#142540;color:#fff}
-</style></head>
-<body><div class="app">
-<aside class="sidebar"><div class="brand"><div class="logo">C</div><div><strong>CodeRisk AI</strong><small>Code Intelligence Platform</small></div></div>
-<div><div class="nav-label">WORKSPACE</div><nav class="nav"><button class="active" data-page="overview"><span class="ico">▦</span> Genel Bakış</button><button data-page="analysis"><span class="ico">⌘</span> Kod Analizi</button><button data-page="reports"><span class="ico">▤</span> Raporlar</button><button data-page="models"><span class="ico">◈</span> Model ve Tahmin</button></nav></div>
-<div class="side-bottom"><b id="modelState">◉ Model kontrol ediliyor…</b><p id="modelStateText">Backend'e bağlanılıyor.</p><div class="tinybar"><span></span></div></div></aside>
-<main class="main"><div class="topbar"><div class="crumb">Workspace&nbsp; / &nbsp;<strong id="crumb">Genel Bakış</strong></div><div class="topright"><div class="status"><span class="dot" id="apiDot"></span> <span id="apiStatus">Backend kontrol ediliyor…</span></div><div class="avatar">CR</div></div></div>
-<section class="page active" id="overview"><div class="heading"><div><div class="eyebrow">SOFTWARE QUALITY ANALYTICS</div><h1>Model ve kod kalitesine genel bakış</h1><p>JM1 verisiyle eğitilen kusur tahmin modelinin gerçek test sonuçları ve kod analizi araçları.</p></div><button class="btn primary" id="goScan">＋ Yeni analiz başlat</button></div>
-<div class="grid"><div class="card"><div class="metric-top">Doğruluk (Accuracy) <span class="metric-icon">✓</span></div><div class="metric-num" id="mAcc">—</div><div class="metric-foot">Test kümesi · karar eşiğinde</div></div><div class="card"><div class="metric-top">Precision <span class="metric-icon" style="color:var(--yellow)">◎</span></div><div class="metric-num" id="mPrec">—</div><div class="metric-foot">“Kusurlu” denenlerin doğru çıkma oranı</div></div><div class="card"><div class="metric-top">Recall <span class="metric-icon" style="color:var(--green)">⌁</span></div><div class="metric-num" id="mRec">—</div><div class="metric-foot">Gerçek kusurların yakalanma oranı</div></div><div class="card"><div class="metric-top">ROC-AUC <span class="metric-icon" style="color:var(--red)">∿</span></div><div class="metric-num" id="mAuc">—</div><div class="metric-foot">Ayırt etme gücü (0.50 = şans)</div></div></div>
-<div class="content-grid"><div class="card"><div class="section-head"><div><h2>Özellik önemleri</h2><p>Modelin kararında en etkili 10 metrik</p></div><span class="pill">RANDOM FOREST</span></div><div id="importanceChart"><div class="empty-files">Model bilgisi yükleniyor…</div></div></div>
-<div class="card mini-table"><div class="section-head"><div><h2>Eşik karşılaştırması</h2><p>Eşik değişince dengenin nasıl kaydığı</p></div><span class="pill">TEST</span></div><div class="table-scroll"><table><thead><tr><th>Eşik</th><th>Precision</th><th>Recall</th><th>F1</th></tr></thead><tbody id="thresholdRows"><tr><td colspan="4" class="empty-row">Yükleniyor…</td></tr></tbody></table></div><div class="notice">Eşik düştükçe daha çok kusur yakalanır (recall artar) ama yanlış alarm da artar.</div></div></div>
-<div class="footer"><span>CodeRisk AI · Graduation Project Prototype</span><span>Statik analiz ≠ doğrulanmış hata tahmini</span></div></section>
-<section class="page" id="analysis"><div class="heading"><div><div class="eyebrow">PROJECT SCANNER</div><h1>Kod analizi</h1><p>Kod dosyalarını (Java, Python, C/C++, C#, JavaScript ve diğerleri) veya ZIP proje arşivini yükle. Python motoru dosya ve metot karmaşıklığını analiz eder.</p></div></div><div class="content-grid"><div class="card"><div class="section-head"><div><h2>Proje yükle</h2><p>Kod dosyaları veya ZIP</p></div><span class="pill">ÇOKLU DİL · .ZIP</span></div><div class="upload" id="dropzone"><div class="upload-ico">⇧</div><h3>Dosyalarını buraya sürükle</h3><p>veya cihazından dosya seç · kod dosyaları ve .zip</p><input type="file" id="fileInput" accept=".java,.py,.c,.h,.cpp,.cc,.hpp,.cs,.js,.ts,.go,.php,.rb,.swift,.kt,.scala,.rs,.lua,.zip" multiple hidden><button class="btn" id="chooseFiles">Dosya seç</button></div><div class="file-list" id="fileList"><div class="empty-files">Henüz dosya seçilmedi.</div></div><div class="scan-controls"><span class="hint" id="fileCount">0 dosya seçildi</span><button class="btn primary" id="scanBtn" disabled>◎ Analizi başlat</button></div><div class="notice">Yüklenen kaynak kod analiz için yerel Python backend'ine gönderilir. Kod çalıştırılmaz; yalnızca statik olarak incelenir.</div></div><div class="card"><div class="section-head"><div><h2>Analiz kapsamı</h2><p>Bağlanacak motorun hedef kontrolleri</p></div></div><div class="risk-legend" style="gap:15px"><div class="risk-row"><i class="swatch" style="background:var(--cyan)"></i>Dosya ve metot metrikleri<strong>Aktif</strong></div><div class="risk-row"><i class="swatch" style="background:var(--blue)"></i>Cyclomatic complexity<strong>Aktif</strong></div><div class="risk-row"><i class="swatch" style="background:var(--yellow)"></i>Uzun metot / dosya uyarıları<strong>Aktif</strong></div><div class="risk-row"><i class="swatch" style="background:var(--red)"></i>ML kusur riski<strong>Model sekmesinde (metrikle)</strong></div></div><div class="notice">JM1 modeli ile Java metrikleri arasında özellik uyumluluğu doğrulanmadan, ML sonucu Java dosyaları için geçerli bir olasılık olarak sunulmamalıdır.</div></div></div><div class="card" id="scanResult" style="display:none"><div class="section-head"><h2>Analiz durumu</h2><span class="pill">PROTOTİP</span></div><p id="scanMessage" style="color:var(--muted)"></p></div></section>
-<section class="page" id="reports"><div class="heading"><div><div class="eyebrow">ANALYSIS HISTORY</div><h1>Raporlar</h1><p>Bu prototipte rapor geçmişi henüz backend'e bağlı değil.</p></div></div><div class="card simple-panel"><div><div style="font-size:35px">▤</div><h2>Henüz kayıtlı rapor yok</h2><p>Analiz motoru bağlandıktan sonra raporlar burada listelenecek.</p><button class="btn primary" onclick="navigate('analysis')">İlk analizi başlat</button></div></div></section>
-<section class="page" id="models"><div class="heading"><div><div class="eyebrow">MODEL &amp; PREDICTION</div><h1>Model ve tahmin</h1><p>21 kod metriğini girerek kusur riskini hesapla. Model NASA JM1 veri setiyle eğitilmiştir.</p></div></div>
-<div class="grid"><div class="card"><div class="metric-top">Model ailesi <span class="metric-icon">◈</span></div><div class="metric-num" id="mdlName" style="font-size:19px">—</div><div class="metric-foot">scikit-learn</div></div><div class="card"><div class="metric-top">Özellik sayısı <span class="metric-icon">#</span></div><div class="metric-num" id="mdlFeat">—</div><div class="metric-foot">JM1 metrikleri</div></div><div class="card"><div class="metric-top">Karar eşiği <span class="metric-icon">⚖</span></div><div class="metric-num" id="mdlThr">—</div><div class="metric-foot">Olasılık bu değerin üstündeyse “Kusurlu”</div></div><div class="card"><div class="metric-top">Model durumu <span class="metric-icon">◉</span></div><div class="metric-num" id="mdlStatus" style="font-size:23px">—</div><div class="metric-foot">Backend ile bağlantı</div></div></div>
-<div class="card"><div class="section-head"><div><h2>Metrikle risk tahmini</h2><p>Değerleri gir ya da test verisinden rastgele örnek yükle</p></div><span class="pill">JM1</span></div>
-<div class="form-grid" id="featureForm"></div>
-<div class="actions"><button class="btn" id="sampleBtn">🎲 Rastgele örnek</button><button class="btn" id="resetBtn">Sıfırla</button><button class="btn primary" id="predictBtn">Tahmin et</button></div>
-<div class="result-box" id="predResult"></div>
-<div class="notice">Model C kodundan elde edilen (NASA JM1) metriklerle eğitildi. Java ve diğer diller için doğrudan tahmin üretmez; bu form model davranışını göstermek içindir. Sonuç doğrulanmış bir hata olasılığı değil, risk skorudur.</div></div></section>
-</main></div><div class="toast" id="toast"><b id="toastTitle">Bilgi</b><span id="toastText"></span></div>
+:root[data-theme="dark"] {
+  --bg: #07080c;
+  --sidebar: #0b0d14;
+  --surface: #0f121b;
+  --surface-2: #161b28;
+  --surface-3: #1f2638;
+  --line: rgba(255, 255, 255, 0.07);
+  --line-2: rgba(255, 255, 255, 0.14);
+  --ink: #fafafa;
+  --ink-2: #a1a1aa;
+  --ink-3: #71717a;
+  --accent: #38bdf8;
+  --accent-2: #818cf8;
+  --accent-soft: rgba(56, 189, 248, 0.12);
+  --accent-ink: #7dd3fc;
+  --ok: #34d399;
+  --ok-soft: rgba(52, 211, 153, 0.12);
+  --warn: #fbbf24;
+  --warn-soft: rgba(251, 191, 36, 0.12);
+  --bad: #fb7185;
+  --bad-soft: rgba(251, 113, 133, 0.12);
+  --hot: #fb923c;
+  --hot-soft: rgba(251, 146, 60, 0.12);
+  --shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.65);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font: 14px/1.6 var(--font);
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  display: flex;
+}
+button, input { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 8px; }
+
+/* ───── App Shell (Sidebar + Content) ───── */
+.sidebar {
+  width: 268px;
+  flex: none;
+  background: var(--sidebar);
+  border-right: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 24px 16px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 40;
+}
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  padding: 4px 10px 24px;
+  border-bottom: 1px solid var(--line);
+}
+.mark {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #050811;
+  font: 800 13px var(--mono);
+  box-shadow: 0 0 24px -4px color-mix(in srgb, var(--accent) 55%, transparent);
+}
+.brand-txt b { display: block; font: 700 18px var(--display); letter-spacing: -0.03em; line-height: 1.1; }
+.brand-txt small { font: 500 11px var(--mono); color: var(--ink-3); }
+
+.nav-grp { margin-top: 20px; display: flex; flex-direction: column; gap: 4px; }
+.nav-lbl { font: 700 10px var(--mono); letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); padding: 0 12px 8px; }
+.tabs { display: flex; flex-direction: column; gap: 4px; }
+.tabs button {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  border: 1px solid transparent;
+  background: none;
+  padding: 11px 14px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 13.5px;
+  color: var(--ink-2);
+  text-align: left;
+  transition: all 0.18s ease;
+}
+.tabs button svg { width: 18px; height: 18px; opacity: 0.75; flex: none; }
+.tabs button:hover { color: var(--ink); background: var(--surface-2); }
+.tabs button[aria-current="page"] {
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+.tabs button[aria-current="page"] svg { opacity: 1; color: var(--accent); }
+
+.sb-foot {
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.chip {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink-2);
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.chip i { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); flex: none; }
+.chip[data-s="ok"] i { background: var(--ok); box-shadow: 0 0 0 3px var(--ok-soft); }
+.chip[data-s="fail"] i { background: var(--bad); box-shadow: 0 0 0 3px var(--bad-soft); }
+.chip[data-s="wait"] i { background: var(--warn); animation: pulse 1.2s ease-in-out infinite; }
+
+.theme-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-2);
+  transition: 0.18s ease;
+}
+.theme-row:hover { color: var(--ink); border-color: var(--line-2); }
+.theme-row svg { width: 16px; height: 16px; }
+:root[data-theme="light"] .i-sun { display: none; }
+:root[data-theme="dark"] .i-moon { display: none; }
+
+/* ───── Workspace Area ───── */
+.workspace {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  background-image: radial-gradient(65% 40% at 50% 0%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%);
+}
+.container { max-width: 1180px; width: 100%; margin: 0 auto; padding: 32px 36px 64px; flex: 1; }
+
+.page { display: none; }
+.page.active { display: block; animation: fadeSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* ───── Page Header Banner ───── */
+.hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 28px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid var(--line);
+}
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font: 700 11px var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  margin-bottom: 10px;
+}
+.hero h1 {
+  font: 700 clamp(26px, 3.4vw, 38px)/1.12 var(--display);
+  letter-spacing: -0.035em;
+  max-width: 720px;
+}
+.hero h1 em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero p { color: var(--ink-2); max-width: 600px; font-size: 14.5px; margin-top: 8px; }
+
+/* ───── Buttons & Bento Cards ───── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 42px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid var(--line-2);
+  background: var(--surface);
+  font-weight: 600;
+  font-size: 13px;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+}
+.btn:hover { border-color: var(--ink-3); background: var(--surface-2); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn.accent {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  color: #060913;
+  font-weight: 700;
+  border: 0;
+  box-shadow: 0 8px 20px -6px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+:root[data-theme="light"] .btn.accent { color: #ffffff; }
+.btn.accent:hover { filter: brightness(1.08); transform: translateY(-1px); }
+.btn.ghost { border-color: transparent; background: transparent; color: var(--ink-2); }
+.btn.ghost:hover { background: var(--surface-2); color: var(--ink); }
+.btn.sm { height: 32px; padding: 0 12px; font-size: 12px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  box-shadow: var(--shadow);
+  padding: 24px;
+  min-width: 0;
+  position: relative;
+}
+.card-h { display: flex; justify-content: space-between; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+.card-h h2 { font: 700 16px var(--display); letter-spacing: -0.02em; }
+.card-h p { font-size: 12.5px; color: var(--ink-3); margin-top: 2px; }
+.tag {
+  font: 700 10px var(--mono);
+  letter-spacing: 0.08em;
+  color: var(--accent-ink);
+  background: var(--accent-soft);
+  border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
+  padding: 4px 9px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.grid { display: grid; gap: 18px; }
+.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.g2 { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); }
+.g-form { grid-template-columns: minmax(0, 1.55fr) minmax(320px, 1fr); align-items: start; }
+.mt { margin-top: 18px; }
+
+.note {
+  display: flex;
+  gap: 12px;
+  font-size: 12.5px;
+  color: var(--ink-2);
+  background: var(--surface-2);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 13px 15px;
+  margin-top: 18px;
+  line-height: 1.5;
+}
+.note svg { flex: none; width: 17px; height: 17px; margin-top: 2px; color: var(--accent); }
+.banner {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  background: var(--bad-soft);
+  color: var(--bad);
+  border: 1px solid color-mix(in srgb, var(--bad) 30%, transparent);
+  border-radius: 12px;
+  padding: 12px 18px;
+  margin-bottom: 20px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.banner.show { display: flex; }
+
+/* ───── KPI Bento Tiles ───── */
+.kpi {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 20px 22px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+.kpi:hover { border-color: var(--line-2); transform: translateY(-2px); }
+.kpi-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.kpi-top small { font: 700 11px var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
+.kpi b {
+  display: block;
+  font: 700 32px/1 var(--display);
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+.kpi span { font-size: 12px; color: var(--ink-2); display: block; margin-top: 4px; }
+.ring { display: block; flex: none; }
+.ring-bg { stroke: var(--surface-3); }
+.ring-fg { transition: stroke-dasharray 0.9s cubic-bezier(0.16, 1, 0.3, 1); }
+.sk {
+  color: transparent !important;
+  background: linear-gradient(90deg, var(--surface-2), var(--surface-3), var(--surface-2));
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+  border-radius: 8px;
+  user-select: none;
+}
+
+/* ───── Feature Importance ───── */
+.imp {
+  display: grid;
+  grid-template-columns: 26px minmax(90px, 150px) 1fr 56px;
+  align-items: center;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+}
+.imp:last-child { border-bottom: 0; }
+.imp .n { font: 600 11px var(--mono); color: var(--ink-3); }
+.imp .f { font: 600 12.5px var(--mono); color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.imp .t { height: 7px; background: var(--surface-2); border-radius: 999px; overflow: hidden; }
+.imp .t span {
+  display: block;
+  height: 100%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  width: 0;
+  transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.imp b { text-align: right; font: 700 12px var(--mono); color: var(--ink-2); }
+.empty { padding: 32px 12px; text-align: center; color: var(--ink-3); font-size: 13px; }
+.col { display: flex; flex-direction: column; }
+#importance { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+
+/* ───── Threshold Chart & Table ───── */
+.chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+.chart .gl { stroke: var(--line); stroke-width: 1; }
+.chart .ax { fill: var(--ink-3); font: 600 10px var(--mono); }
+.chart .cur { stroke: var(--ink); stroke-width: 1.5; stroke-dasharray: 4 4; opacity: 0.65; }
+.legend { display: flex; gap: 18px; flex-wrap: wrap; margin-top: 14px; font-size: 12px; font-weight: 600; color: var(--ink-2); }
+.legend span { display: inline-flex; align-items: center; gap: 8px; }
+.legend i { width: 12px; height: 4px; border-radius: 3px; }
+.tbl-wrap { overflow-x: auto; margin: 16px 0 0; border: 1px solid var(--line); border-radius: 12px; }
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+th {
+  font: 700 10.5px var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  background: var(--surface-2);
+  text-align: left;
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--line);
+  white-space: nowrap;
+}
+td { padding: 11px 14px; border-bottom: 1px solid var(--line); color: var(--ink-2); vertical-align: middle; }
+tr:last-child td { border-bottom: 0; }
+td.m, th.m { text-align: right; font-family: var(--mono); }
+td:first-child { color: var(--ink); font-weight: 600; }
+tbody tr:hover td { background: var(--surface-2); }
+tr.cur td { background: var(--accent-soft); color: var(--ink); }
+tr.cur td:first-child { color: var(--accent-ink); font-weight: 700; }
+
+/* ───── Dropzone & Scan Results ───── */
+.drop {
+  border: 1.5px dashed var(--line-2);
+  border-radius: 16px;
+  padding: 40px 24px;
+  text-align: center;
+  background: var(--surface-2);
+  transition: all 0.2s ease;
+}
+.drop.drag { border-color: var(--accent); background: var(--accent-soft); }
+.drop .ic {
+  width: 52px;
+  height: 52px;
+  margin: 0 auto 14px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  color: var(--accent);
+}
+.drop .ic svg { width: 24px; height: 24px; }
+.drop h3 { font: 700 15.5px var(--display); }
+.drop p { color: var(--ink-3); font-size: 13px; margin: 4px 0 18px; }
+.files { display: grid; gap: 8px; margin-top: 14px; }
+.file {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+.file .ext {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent-ink);
+  font: 700 10.5px var(--mono);
+}
+.file .meta { flex: 1; min-width: 0; }
+.file .meta b { display: block; font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.file .meta small { color: var(--ink-3); font-size: 11px; }
+.file .rm { border: 0; background: none; color: var(--ink-3); width: 30px; height: 30px; border-radius: 8px; font-size: 19px; }
+.file .rm:hover { background: var(--bad-soft); color: var(--bad); }
+.bar-row { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-top: 18px; flex-wrap: wrap; }
+.hint { font-size: 12.5px; color: var(--ink-3); font-weight: 500; }
+
+.scope { display: grid; gap: 10px; }
+.scope div {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 13px 15px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface-2);
+}
+.scope i { width: 9px; height: 9px; border-radius: 3px; flex: none; }
+.scope span {
+  margin-left: auto;
+  font: 700 10px var(--mono);
+  letter-spacing: 0.06em;
+  color: var(--ok);
+  background: var(--ok-soft);
+  padding: 3px 9px;
+  border-radius: 6px;
+}
+.scope span.off { color: var(--ink-3); background: var(--surface-3); }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; margin-bottom: 18px; }
+.stat { padding: 16px; border: 1px solid var(--line); border-radius: 14px; background: var(--surface-2); }
+.stat small { font-size: 11.5px; color: var(--ink-2); font-weight: 600; }
+.stat b { display: block; font: 700 26px var(--display); letter-spacing: -0.03em; margin-top: 4px; color: var(--ink); }
+.tools { display: flex; gap: 12px; align-items: center; justify-content: space-between; flex-wrap: wrap; margin-bottom: 12px; }
+.search {
+  height: 38px;
+  min-width: 240px;
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 0 13px;
+  outline: none;
+  font-size: 13px;
+}
+.search:focus { border-color: var(--accent); }
+.cx { display: flex; align-items: center; gap: 10px; justify-content: flex-end; }
+.cx .bar { width: 68px; height: 6px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.cx .bar span { display: block; height: 100%; border-radius: 4px; }
+.warns { display: flex; gap: 6px; flex-wrap: wrap; }
+.badge { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; padding: 3px 9px; border-radius: 6px; white-space: nowrap; }
+.b-ok { color: var(--ok); background: var(--ok-soft); }
+.b-warn { color: var(--warn); background: var(--warn-soft); }
+.b-hot { color: var(--hot); background: var(--hot-soft); }
+.b-bad { color: var(--bad); background: var(--bad-soft); }
+.b-mute { color: var(--ink-2); background: var(--surface-2); }
+.path { font-family: var(--mono); font-size: 12px; word-break: break-all; }
+
+/* ───── History ───── */
+.hist { display: grid; gap: 10px; }
+.hist-i {
+  display: grid;
+  grid-template-columns: 1fr repeat(4, auto);
+  gap: 24px;
+  align-items: center;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--surface);
+  transition: 0.18s ease;
+}
+.hist-i:hover { border-color: var(--line-2); }
+.hist-i .d b { display: block; font-size: 13.5px; font-weight: 700; }
+.hist-i .d small { font-size: 12px; color: var(--ink-3); }
+.hist-i .v { text-align: center; }
+.hist-i .v b { display: block; font: 700 16px var(--mono); color: var(--ink); }
+.hist-i .v small { font-size: 10px; color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 700; }
+.big-empty { text-align: center; padding: 56px 24px; }
+.big-empty .ic {
+  width: 58px;
+  height: 58px;
+  border-radius: 16px;
+  margin: 0 auto 18px;
+  display: grid;
+  place-items: center;
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.big-empty .ic svg { width: 28px; height: 28px; }
+.big-empty h2 { font: 700 19px var(--display); }
+.big-empty p { color: var(--ink-2); margin: 8px auto 20px; max-width: 420px; font-size: 13.5px; }
+
+/* ───── Model & Predict ───── */
+.fgrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(136px, 1fr)); gap: 12px; }
+.fld label { display: block; font: 600 11px var(--mono); color: var(--ink-3); margin-bottom: 5px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.fld input {
+  width: 100%;
+  height: 38px;
+  border: 1px solid var(--line-2);
+  background: var(--surface-2);
+  border-radius: 10px;
+  padding: 0 11px;
+  font: 600 13px var(--mono);
+  outline: none;
+  transition: 0.15s ease;
+}
+.fld input:focus { border-color: var(--accent); background: var(--surface); }
+.acts { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.side { position: sticky; top: 32px; }
+.res-empty { text-align: center; padding: 36px 14px; color: var(--ink-3); }
+.res-empty .ic { width: 48px; height: 48px; border-radius: 14px; margin: 0 auto 12px; display: grid; place-items: center; background: var(--surface-2); color: var(--ink-3); }
+.res-empty .ic svg { width: 22px; height: 22px; }
+.res-empty b { display: block; color: var(--ink); font-size: 14.5px; margin-bottom: 4px; }
+.res-empty span { font-size: 12.5px; }
+.res { animation: fadeSlide 0.35s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.res-ring { position: relative; width: 164px; height: 164px; margin: 6px auto 18px; }
+.res-ring .c { position: absolute; inset: 0; display: grid; place-content: center; text-align: center; }
+.res-ring .c b { font: 700 36px/1 var(--display); letter-spacing: -0.04em; }
+.res-ring .c small { font-size: 11px; font-weight: 600; color: var(--ink-3); margin-top: 6px; }
+.res-badges { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; }
+.res-badges .badge { font-size: 12px; padding: 5px 12px; }
+.meter { position: relative; height: 10px; border-radius: 6px; background: var(--surface-2); margin: 22px 0 9px; padding: 2px; }
+.meter > span { display: block; height: 100%; border-radius: 4px; transition: width 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.meter > i { position: absolute; top: -5px; bottom: -5px; width: 3px; background: var(--ink); border-radius: 3px; }
+.meter-n { font-size: 11px; color: var(--ink-3); text-align: center; }
+.actual { margin-top: 14px; text-align: center; font-size: 12.5px; font-weight: 600; color: var(--ink-2); padding: 11px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line); }
+.mini { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.mini .card { padding: 18px 20px; }
+.mini small { font-size: 11.5px; color: var(--ink-3); font-weight: 600; }
+.mini b { display: block; font: 700 21px var(--display); letter-spacing: -0.03em; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ───── Footer & Toast ───── */
+footer {
+  border-top: 1px solid var(--line);
+  padding: 20px 36px;
+  color: var(--ink-3);
+  font-size: 12.5px;
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.toast {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  transform: translateY(20px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 100;
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: 12px;
+  padding: 13px 18px;
+  max-width: min(380px, calc(100vw - 32px));
+  box-shadow: var(--shadow);
+  transition: 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+.toast b { display: block; font-size: 13.5px; font-weight: 700; }
+.toast span { font-size: 12px; opacity: 0.85; }
+
+@keyframes fadeSlide { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@keyframes shimmer { to { background-position: -200% 0; } }
+@keyframes pulse { 50% { opacity: 0.4; } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+@media (max-width: 1120px) {
+  .g4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .g2, .g-form { grid-template-columns: 1fr; }
+  .side { position: static; }
+}
+@media (max-width: 860px) {
+  body { flex-direction: column; }
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: sticky;
+    top: 0;
+    padding: 12px 16px;
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .brand { padding: 0; border-bottom: 0; }
+  .brand-txt small, .nav-lbl, .theme-row span { display: none; }
+  .nav-grp { margin-top: 0; order: 3; width: 100%; }
+  .tabs { flex-direction: row; overflow-x: auto; }
+  .tabs button { justify-content: center; padding: 8px 12px; font-size: 12.5px; white-space: nowrap; }
+  .sb-foot { border-top: 0; padding-top: 0; flex-direction: row; margin-left: auto; }
+  .chip span { display: none; }
+  .container { padding: 20px 16px 48px; }
+  footer { padding: 18px 16px; }
+}
+@media (max-width: 600px) {
+  .g4, .mini, .stats { grid-template-columns: 1fr; }
+  .hist-i { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .hist-i .d { grid-column: 1 / -1; }
+}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div>
+    <a class="brand" href="#overview" aria-label="CodeRisk AI">
+      <span class="mark">&lt;/&gt;</span>
+      <div class="brand-txt">
+        <b>CodeRisk AI</b>
+        <small>Quality &amp; Defect Engine</small>
+      </div>
+    </a>
+
+    <div class="nav-grp">
+      <div class="nav-lbl">Çalışma Alanı</div>
+      <nav class="tabs" aria-label="Sayfalar">
+        <button data-page="overview">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/></svg>
+          Genel Bakış
+        </button>
+        <button data-page="analysis">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          Kod Analizi
+        </button>
+        <button data-page="reports">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+          Raporlar
+        </button>
+        <button data-page="models">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+          Model &amp; Tahmin
+        </button>
+      </nav>
+    </div>
+  </div>
+
+  <div class="sb-foot">
+    <div class="chip" id="apiChip" data-s="wait"><i></i><span id="apiStatus">Bağlanılıyor…</span></div>
+    <button class="theme-row" id="themeBtn" aria-label="Temayı değiştir" title="Temayı değiştir">
+      <span>Görünüm Teması</span>
+      <svg class="i-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      <svg class="i-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+    </button>
+  </div>
+</aside>
+
+<div class="workspace">
+  <main class="container">
+    <div class="banner" id="offline" role="alert">
+      <span id="offlineText">Sunucuya ulaşılamıyor.</span>
+      <button class="btn sm" id="retryBtn">Yeniden dene</button>
+    </div>
+
+    <!-- ═════════ GENEL BAKIŞ ═════════ -->
+    <section class="page" id="overview">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">Software Quality Analytics</span>
+          <h1>Kodunuzdaki riski <em>veriyle</em> görün.</h1>
+          <p>NASA JM1 veri setiyle eğitilen kusur tahmin modelinin gerçek test sonuçları ve statik kod analizi araçları tek platformda.</p>
+        </div>
+        <button class="btn accent" id="goScan">Yeni analiz başlat →</button>
+      </div>
+
+      <div class="grid g4">
+        <div class="card kpi">
+          <div class="kpi-top"><small>Doğruluk</small><span data-ring="acc"></span></div>
+          <div><b id="mAcc" class="sk">00.0%</b><span>Test kümesi · karar eşiğinde</span></div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-top"><small>Precision</small><span data-ring="prec"></span></div>
+          <div><b id="mPrec" class="sk">00.0%</b><span>“Kusurlu” denenin doğruluk oranı</span></div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-top"><small>Recall</small><span data-ring="rec"></span></div>
+          <div><b id="mRec" class="sk">00.0%</b><span>Gerçek kusurların yakalanma oranı</span></div>
+        </div>
+        <div class="card kpi">
+          <div class="kpi-top"><small>ROC-AUC</small><span data-ring="auc"></span></div>
+          <div><b id="mAuc" class="sk">0.00</b><span>Ayırt etme gücü (0.50 = şans)</span></div>
+        </div>
+      </div>
+
+      <div class="grid g2 mt">
+        <div class="card col">
+          <div class="card-h"><div><h2>Özellik önemleri</h2><p>Model kararında en etkili 10 metrik</p></div><span class="tag">RANDOM FOREST</span></div>
+          <div id="importance"><div class="empty">Model bilgisi yükleniyor…</div></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><div><h2>Eşik karşılaştırması</h2><p>Eşik değiştikçe dengenin kayma eğrisi</p></div><span class="tag">TEST</span></div>
+          <div class="chart" id="thrChart"><div class="empty">Yükleniyor…</div></div>
+          <div class="legend" id="thrLegend"></div>
+          <div class="tbl-wrap">
+            <table>
+              <thead><tr><th>Eşik</th><th class="m">Precision</th><th class="m">Recall</th><th class="m">F1</th></tr></thead>
+              <tbody id="thrRows"><tr><td colspan="4" class="empty">Yükleniyor…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg><span>Eşik düştükçe daha çok kusur yakalanır (recall artar) ancak yanlış alarm sayısı da yükselir.</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═════════ KOD ANALİZİ ═════════ -->
+    <section class="page" id="analysis">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">Project Scanner</span>
+          <h1>Projenizi <em>yükleyin</em>, karmaşıklığı görün.</h1>
+          <p>Kaynak kod dosyalarınızı veya ZIP arşivinizi yükleyin. Python analiz motoru dosya ve metot karmaşıklıklarını anında çıkarsın.</p>
+        </div>
+      </div>
+
+      <div class="grid g2">
+        <div class="card">
+          <div class="card-h"><div><h2>Proje yükle</h2><p>Kod dosyaları veya ZIP arşivi</p></div><span class="tag">ÇOKLU DİL · .ZIP</span></div>
+          <div class="drop" id="drop">
+            <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V4M7 9l5-5 5 5M5 20h14"/></svg></div>
+            <h3>Dosyalarını buraya sürükle</h3>
+            <p>veya cihazından seç · kaynak kod dosyaları ve .zip</p>
+            <input type="file" id="fileInput" accept=".java,.py,.c,.h,.cpp,.cc,.hpp,.cs,.js,.ts,.go,.php,.rb,.swift,.kt,.scala,.rs,.lua,.zip" multiple hidden>
+            <button class="btn" id="pick">Dosya seç</button>
+          </div>
+          <div class="files" id="fileList"></div>
+          <div class="bar-row"><span class="hint" id="fileCount">0 dosya seçildi</span><button class="btn accent" id="scanBtn" disabled>Analizi başlat</button></div>
+          <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg><span>Yüklenen kaynak kod statik analiz için backend'e gönderilir. Kodlar derlenmez veya çalıştırılmaz.</span></div>
+        </div>
+
+        <div class="card">
+          <div class="card-h"><div><h2>Analiz kapsamı</h2><p>Motorun aktif tarama kontrolleri</p></div></div>
+          <div class="scope">
+            <div><i style="background:var(--accent)"></i>Dosya ve metot metrikleri<span>AKTİF</span></div>
+            <div><i style="background:var(--accent-2)"></i>Cyclomatic complexity (Karmaşıklık)<span>AKTİF</span></div>
+            <div><i style="background:var(--warn)"></i>Uzun metot / dosya uyarıları<span>AKTİF</span></div>
+            <div><i style="background:var(--bad)"></i>ML kusur riski<span class="off">MODEL SEKMESİ</span></div>
+          </div>
+          <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>JM1 modeli C metrikleriyle eğitilmiştir. Java ve diğer diller için uyumluluk doğrulanmadan ML sonucu doğrudan geçerli bir olasılık sayılmamalıdır.</span></div>
+        </div>
+      </div>
+
+      <div class="card mt" id="scanResult" style="display:none">
+        <div class="card-h"><div><h2>Analiz sonucu</h2><p id="scanSub">Statik analiz raporu</p></div><span class="tag">STATİK ANALİZ</span></div>
+        <div id="scanBody"></div>
+      </div>
+    </section>
+
+    <!-- ═════════ RAPORLAR ═════════ -->
+    <section class="page" id="reports">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">Analysis History</span>
+          <h1>Geçmiş <em>raporlar</em></h1>
+          <p>Bu cihazda gerçekleştirdiğiniz tüm analiz geçmişi aşağıda listelenir. Veriler yerel olarak saklanmaktadır.</p>
+        </div>
+        <button class="btn" id="clearHist" style="display:none">Geçmişi temizle</button>
+      </div>
+      <div id="histBody"></div>
+    </section>
+
+    <!-- ═════════ MODEL VE TAHMİN ═════════ -->
+    <section class="page" id="models">
+      <div class="hero">
+        <div>
+          <span class="eyebrow">Model &amp; Prediction</span>
+          <h1>Kusur riskini <em>hesaplayın</em>.</h1>
+          <p>Metrik değerlerini girerek olası hata risk skoru çıkarın. Model NASA JM1 veri setiyle eğitilmiştir.</p>
+        </div>
+      </div>
+
+      <div class="mini">
+        <div class="card"><small>Model ailesi</small><b id="mdlName">—</b></div>
+        <div class="card"><small>Özellik sayısı</small><b id="mdlFeat">—</b></div>
+        <div class="card"><small>Karar eşiği</small><b id="mdlThr">—</b></div>
+      </div>
+
+      <div class="grid g-form mt">
+        <div class="card">
+          <div class="card-h"><div><h2>Metrikle risk tahmini</h2><p>Manuel değer girin veya test setinden örnek çekin</p></div><span class="tag">JM1 DATASET</span></div>
+          <div class="fgrid" id="featureForm"><div class="empty" style="grid-column:1/-1">Model yükleniyor…</div></div>
+          <div class="acts">
+            <button class="btn" id="sampleBtn" disabled>Rastgele örnek</button>
+            <button class="btn ghost" id="resetBtn" disabled>Sıfırla</button>
+            <button class="btn accent" id="predictBtn" disabled style="margin-left:auto">Tahmin et</button>
+          </div>
+          <div class="note"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8h.01M11 12h1v5h1"/></svg><span>Model C kodlarından elde edilen NASA JM1 verileriyle hazırlanmıştır. Üretilen çıktı kesin hata olasılığı değil, nispi risk skorudur.</span></div>
+        </div>
+
+        <div class="card side">
+          <div class="card-h"><div><h2>Sonuç</h2><p>Modelin tahmin çıktısı</p></div></div>
+          <div id="result">
+            <div class="res-empty">
+              <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-8 4 16 3-8h4"/></svg></div>
+              <b>Henüz tahmin yapılmadı</b><span>Metrikleri girip “Tahmin et” butonuna basın.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <span>CodeRisk AI · Graduation Project Prototype</span>
+    <span>Statik analiz ≠ doğrulanmış hata tahmini</span>
+  </footer>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"><b id="toastT"></b><span id="toastM"></span></div>
+
 <script>
 const API_BASE = "https://coderiskai-api.onrender.com";
-const pages={overview:'Genel Bakış',analysis:'Kod Analizi',reports:'Raporlar',models:'Model ve Tahmin'};
-function navigate(name){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===name));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===name));document.getElementById('crumb').textContent=pages[name]||name;window.scrollTo({top:0,behavior:'smooth'})}
-document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>navigate(b.dataset.page)));document.getElementById('goScan').onclick=()=>navigate('analysis');
-let selected=[];const input=document.getElementById('fileInput'),list=document.getElementById('fileList'),count=document.getElementById('fileCount'),scan=document.getElementById('scanBtn'),drop=document.getElementById('dropzone');
-document.getElementById('chooseFiles').onclick=()=>input.click();input.addEventListener('change',e=>addFiles([...e.target.files]));function addFiles(files){const valid=files.filter(f=>/\.(java|py|c|h|cpp|cc|hpp|cs|js|ts|go|php|rb|swift|kt|scala|rs|lua|zip)$/i.test(f.name));const invalid=files.length-valid.length;if(invalid)toast('Bazı dosyalar eklenmedi','Desteklenen kod dosyaları veya .zip seç.');selected=[...selected,...valid].filter((f,i,a)=>a.findIndex(x=>x.name===f.name&&x.size===f.size)===i);renderFiles();if(valid.length)document.getElementById('scanResult').style.display='none'}function renderFiles(){list.innerHTML='';if(!selected.length){list.innerHTML='<div class="empty-files">Henüz dosya seçilmedi.</div>'}selected.forEach((f,i)=>{const el=document.createElement('div');el.className='file-item';el.innerHTML=`<div class="file-symbol">${f.name.toLowerCase().endsWith('.zip')?'ZIP':'JAVA'}</div><div class="file-meta"><b></b><small>${formatSize(f.size)}</small></div><button class="remove" aria-label="Kaldır">×</button>`;el.querySelector('b').textContent=f.name;el.querySelector('button').onclick=()=>{selected.splice(i,1);renderFiles()};list.appendChild(el)});count.textContent=selected.length+' dosya seçildi';scan.disabled=!selected.length}function formatSize(n){return n<1024?n+' B':n<1048576?(n/1024).toFixed(1)+' KB':(n/1048576).toFixed(1)+' MB'};drop.addEventListener('dragover',e=>{e.preventDefault();drop.classList.add('drag')});drop.addEventListener('dragleave',()=>drop.classList.remove('drag'));drop.addEventListener('drop',e=>{e.preventDefault();drop.classList.remove('drag');addFiles([...e.dataTransfer.files])});
-scan.onclick=async()=>{
- const r=document.getElementById('scanResult'), msg=document.getElementById('scanMessage');
- r.style.display='block'; msg.textContent='Analiz yapılıyor…'; scan.disabled=true; scan.textContent='Analiz ediliyor…';
- try {
-   const form=new FormData(); selected.forEach(f=>form.append('files',f));
-   const response=await fetch(API_BASE+'/api/analyze',{method:'POST',body:form});
-   const data=await response.json();
-   if(!response.ok) throw new Error(data.detail||'Analiz başarısız oldu.');
-   msg.innerHTML='';
-   const summary=document.createElement('div'); summary.className='grid'; summary.style.marginTop='14px';
-   const cards=[['Kaynak dosya',data.summary.file_count],['Toplam metot',data.summary.method_count],['Uzun dosya',data.summary.long_file_count],['Karmaşık metot',data.summary.complex_method_count]];
-   cards.forEach(([label,value])=>{const c=document.createElement('div');c.className='card';c.innerHTML='<div class="metric-top"></div><div class="metric-num"></div><div class="metric-foot">Gerçek analiz sonucu</div>';c.querySelector('.metric-top').textContent=label;c.querySelector('.metric-num').textContent=value;summary.appendChild(c)});
-   msg.appendChild(summary);
-   const note=document.createElement('p');note.style.color='var(--muted)';note.textContent='Statik analiz tamamlandı. Bu sonuçlar makine öğrenmesi kusur tahmini değildir.';msg.appendChild(note);
-   const table=document.createElement('div');table.className='table-scroll';table.style.marginTop='12px';
-   const tbl=document.createElement('table');tbl.innerHTML='<thead><tr><th>Dosya</th><th>Dil</th><th>Satır</th><th>Metot</th><th>En yüksek karmaşıklık</th><th>Uyarı</th></tr></thead><tbody></tbody>';
-   data.files.slice().sort((a,b)=>b.max_method_complexity-a.max_method_complexity).slice(0,30).forEach(item=>{const tr=document.createElement('tr');[item.file,(item.language||'').toUpperCase(),item.non_empty_lines,item.method_count,item.max_method_complexity,item.warnings.join(', ')||'Yok'].forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.appendChild(td)});tbl.querySelector('tbody').appendChild(tr)});
-   table.appendChild(tbl);msg.appendChild(table);
-   toast('Analiz tamamlandı',`${data.summary.file_count} kaynak dosyası incelendi.`);
- } catch(err) { msg.textContent='Analiz hatası: '+err.message+'. Backend çalışıyor mu? README dosyasındaki başlatma adımlarını kontrol et.'; toast('Analiz yapılamadı',err.message); }
- finally {scan.disabled=!selected.length;scan.textContent='◎ Analizi başlat';r.scrollIntoView({behavior:'smooth',block:'nearest'});}
-};let toastTimer;function toast(title,msg){const t=document.getElementById('toast');document.getElementById('toastTitle').textContent=title;document.getElementById('toastText').textContent=msg;t.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),3500)}
+const PAGES = ["overview", "analysis", "reports", "models"];
+const $ = (id) => document.getElementById(id);
 
-/* ====== Model, genel bakış ve tahmin ====== */
-let modelInfo=null,lastActual=null;const featureInputs={};
-const LEVELS={'Dusuk':['Düşük','low','#48d6a1'],'Orta':['Orta','medium','#ffca70'],'Yuksek':['Yüksek','high','#ff9b6b'],'Cok yuksek':['Çok yüksek','high','#ff7187']};
-const pct=(v,d=1)=>(v===null||v===undefined)?'—':(v*100).toFixed(d)+'%';
-const num2=v=>(v===null||v===undefined)?'—':Number(v).toFixed(2);
-async function api(path,options){const r=await fetch(API_BASE+path,options);let d=null;try{d=await r.json()}catch(e){}if(!r.ok)throw new Error((d&&d.detail)||('İstek başarısız ('+r.status+')'));return d}
-function setApiStatus(ok,text){document.getElementById('apiStatus').textContent=text;const dot=document.getElementById('apiDot');dot.style.background=ok?'var(--green)':'var(--red)';dot.style.boxShadow=ok?'0 0 10px #48d6a177':'0 0 10px #ff718777'}
-function setModelState(title,text){document.getElementById('modelState').textContent=title;document.getElementById('modelStateText').textContent=text}
-function el(tag,text,cls){const e=document.createElement(tag);if(text!==undefined)e.textContent=text;if(cls)e.className=cls;return e}
-function renderModel(){
- const f=modelInfo.final_results||{};
- document.getElementById('mAcc').textContent=pct(f.accuracy);document.getElementById('mPrec').textContent=pct(f.precision);
- document.getElementById('mRec').textContent=pct(f.recall);document.getElementById('mAuc').textContent=num2(f.roc_auc);
- document.getElementById('mdlName').textContent=modelInfo.model_name;document.getElementById('mdlFeat').textContent=modelInfo.features.length;
- document.getElementById('mdlThr').textContent=num2(modelInfo.threshold);document.getElementById('mdlStatus').textContent='Bağlı';
- setModelState('◉ Model bağlı',modelInfo.model_name+' · '+modelInfo.features.length+' özellik · eşik '+num2(modelInfo.threshold));
- const chart=document.getElementById('importanceChart');chart.textContent='';
- const top=modelInfo.feature_importance.slice(0,10),max=Math.max(...top.map(i=>i.importance||0),0.0001);
- top.forEach(i=>{const row=el('div',undefined,'hbar');row.appendChild(el('span',i.feature));const tr=el('div',undefined,'track'),fill=document.createElement('span');fill.style.width=((i.importance||0)/max*100)+'%';tr.appendChild(fill);row.appendChild(tr);row.appendChild(el('b',pct(i.importance)));chart.appendChild(row)});
- if(!top.length)chart.appendChild(el('div','Özellik önemi raporu bulunamadı.','empty-files'));
- const body=document.getElementById('thresholdRows');body.textContent='';
- modelInfo.threshold_comparison.forEach(r=>{const tr=document.createElement('tr');if(Math.abs(r.threshold-modelInfo.threshold)<1e-9)tr.className='cur';[num2(r.threshold),num2(r.precision),num2(r.recall),num2(r.f1_score)].forEach(v=>tr.appendChild(el('td',v)));body.appendChild(tr)});
- if(!modelInfo.threshold_comparison.length){const tr=document.createElement('tr'),td=el('td','Eşik raporu bulunamadı.','empty-row');td.colSpan=4;tr.appendChild(td);body.appendChild(tr)}
- buildForm();
+/* ───── DOM Yardımcıları ───── */
+function h(tag, props, ...kids) {
+  const e = document.createElement(tag);
+  for (const [k, v] of Object.entries(props || {})) {
+    if (v == null || v === false) continue;
+    if (k === "class") e.className = v;
+    else if (k === "text") e.textContent = v;
+    else if (k === "style") e.style.cssText = v;
+    else if (k.startsWith("on")) e.addEventListener(k.slice(2), v);
+    else e.setAttribute(k, v);
+  }
+  for (const kid of kids.flat()) {
+    if (kid == null || kid === false) continue;
+    e.append(kid.nodeType ? kid : document.createTextNode(kid));
+  }
+  return e;
 }
-function buildForm(){
- const form=document.getElementById('featureForm');form.textContent='';
- modelInfo.features.forEach(name=>{const wrap=el('div',undefined,'field');const label=el('label',name);const input=document.createElement('input');input.type='number';input.step='any';input.value='0';input.addEventListener('input',()=>{lastActual=null});featureInputs[name]=input;label.htmlFor='f_'+name;input.id='f_'+name;wrap.appendChild(label);wrap.appendChild(input);form.appendChild(wrap)});
+function svg(tag, props, ...kids) {
+  const e = document.createElementNS("http://www.w3.org/2000/svg", tag);
+  for (const [k, v] of Object.entries(props || {})) if (v != null) e.setAttribute(k, v);
+  for (const kid of kids.flat()) if (kid) e.append(kid);
+  return e;
 }
-function fillInputs(metrics){Object.keys(featureInputs).forEach(k=>{featureInputs[k].value=(metrics&&metrics[k]!==undefined&&metrics[k]!==null)?metrics[k]:0})}
-async function runPredict(){
- const metrics={};
- for(const k of Object.keys(featureInputs)){const v=parseFloat(featureInputs[k].value);if(Number.isNaN(v)){toast('Eksik değer',k+' alanına sayı gir.');return}metrics[k]=v}
- const btn=document.getElementById('predictBtn');btn.disabled=true;
- try{
-  const res=await api('/api/predict',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(metrics)});
-  const [label,badge,color]=LEVELS[res.risk_level]||[res.risk_level,'medium','#ffca70'];
-  const box=document.getElementById('predResult');box.textContent='';box.style.display='block';
-  const top=el('div',undefined,'result-top');
-  const a=el('div');a.appendChild(el('small','Kusur olasılığı'));a.appendChild(el('div','%'+res.defect_probability,'big'));top.appendChild(a);
-  const b=el('div');b.appendChild(el('small','Tahmin'));b.appendChild(el('span',res.prediction,'risk-badge '+(res.prediction==='Kusurlu'?'high':'low')));top.appendChild(b);
-  const c=el('div');c.appendChild(el('small','Risk seviyesi'));c.appendChild(el('span',label,'risk-badge '+badge));top.appendChild(c);
-  box.appendChild(top);
-  const meter=el('div',undefined,'meter'),fill=document.createElement('span');fill.style.width=Math.min(100,Math.max(0,res.defect_probability))+'%';fill.style.background=color;meter.appendChild(fill);
-  const mark=document.createElement('i');mark.style.left=(res.threshold*100)+'%';meter.appendChild(mark);box.appendChild(meter);
-  box.appendChild(el('div','Beyaz çizgi karar eşiğini gösterir (%'+Math.round(res.threshold*100)+').','meter-note'));
-  if(lastActual!==null)box.appendChild(el('div','Bu örneğin veri setindeki gerçek etiketi: '+(lastActual?'Kusurlu':'Kusursuz'),'meter-note'));
- }catch(err){toast('Tahmin yapılamadı',err.message)}
- finally{btn.disabled=false}
+const pct = (v, d = 1) => (v == null || isNaN(v) ? "—" : (v * 100).toFixed(d) + "%");
+const num2 = (v) => (v == null || isNaN(v) ? "—" : Number(v).toFixed(2));
+const clamp01 = (v) => Math.max(0, Math.min(1, Number(v) || 0));
+
+let toastTimer;
+function toast(title, msg) {
+  $("toastT").textContent = title;
+  $("toastM").textContent = msg || "";
+  $("toast").classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => $("toast").classList.remove("show"), 3800);
 }
-document.getElementById('predictBtn').onclick=runPredict;
-document.getElementById('resetBtn').onclick=()=>{fillInputs(null);lastActual=null;document.getElementById('predResult').style.display='none'};
-document.getElementById('sampleBtn').onclick=async()=>{
- try{const s=await api('/api/sample');fillInputs(s.metrics);await runPredict();lastActual=null;
-  const box=document.getElementById('predResult');box.appendChild(el('div','Bu örneğin veri setindeki gerçek etiketi: '+(s.actual_defect?'Kusurlu':'Kusursuz'),'meter-note'))}
- catch(err){toast('Örnek yüklenemedi',err.message)}
+
+/* ───── Tema Yönetimi ───── */
+$("themeBtn").onclick = () => {
+  const next = document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+  document.documentElement.dataset.theme = next;
+  try { localStorage.setItem("cr-theme", next); } catch (e) {}
+  if (modelInfo) renderThresholds();
 };
-async function loadModel(){
- try{await api('/api/health');setApiStatus(true,'Backend çalışıyor')}
- catch(e){setApiStatus(false,'Backend\'e ulaşılamıyor');setModelState('◉ Bağlantı yok','Sunucuyu README\'deki komutla başlat.');document.getElementById('mdlStatus').textContent='Bağlı değil';return}
- try{modelInfo=await api('/api/model-info');renderModel()}
- catch(e){setModelState('◉ Model yüklenemedi',e.message);document.getElementById('mdlStatus').textContent='Hata';toast('Model yüklenemedi',e.message)}
+
+/* ───── Sayfa Gezinme ───── */
+function navigate(name) {
+  if (!PAGES.includes(name)) name = "overview";
+  document.querySelectorAll(".page").forEach((p) => p.classList.toggle("active", p.id === name));
+  document.querySelectorAll(".tabs button").forEach((b) => {
+    if (b.dataset.page === name) b.setAttribute("aria-current", "page");
+    else b.removeAttribute("aria-current");
+  });
+  if (name === "reports") renderHistory();
+  window.scrollTo({ top: 0, behavior: "smooth" });
 }
+document.querySelectorAll(".tabs button").forEach((b) => (b.onclick = () => { location.hash = b.dataset.page; }));
+window.addEventListener("hashchange", () => navigate(location.hash.slice(1)));
+$("goScan").onclick = () => { location.hash = "analysis"; };
+
+/* ───── API İletişimi ───── */
+async function api(path, options, timeout = 30000) {
+  const ctrl = new AbortController();
+  const timer = setTimeout(() => ctrl.abort(), timeout);
+  try {
+    const r = await fetch(API_BASE + path, { ...(options || {}), signal: ctrl.signal });
+    let d = null;
+    try { d = await r.json(); } catch (e) {}
+    if (!r.ok) throw new Error((d && d.detail) || "İstek başarısız (" + r.status + ")");
+    return d;
+  } catch (err) {
+    if (err.name === "AbortError") throw new Error("İstek zaman aşımına uğradı.");
+    throw err;
+  } finally { clearTimeout(timer); }
+}
+function setApi(state, text) {
+  $("apiChip").dataset.s = state;
+  $("apiStatus").textContent = text;
+}
+
+/* ───── Halka Gösterge (Ring Gauge) ───── */
+function ring(value, { size = 46, stroke = 5, color = "var(--accent)" } = {}) {
+  const r = (size - stroke) / 2, c = 2 * Math.PI * r, mid = size / 2;
+  const fg = svg("circle", { cx: mid, cy: mid, r, fill: "none", "stroke-width": stroke, "stroke-linecap": "round", stroke: color, class: "ring-fg", transform: `rotate(-90 ${mid} ${mid})` });
+  fg.style.strokeDasharray = `0 ${c}`;
+  requestAnimationFrame(() => requestAnimationFrame(() => { fg.style.strokeDasharray = `${c * clamp01(value)} ${c}`; }));
+  return svg("svg", { viewBox: `0 0 ${size} ${size}`, width: size, height: size, class: "ring", "aria-hidden": "true" },
+    svg("circle", { cx: mid, cy: mid, r, fill: "none", "stroke-width": stroke, class: "ring-bg" }), fg);
+}
+
+/* ═════════ GENEL BAKIŞ LOGIC ═════════ */
+let modelInfo = null;
+const KPI = { acc: ["mAcc", "var(--accent)"], prec: ["mPrec", "var(--ok)"], rec: ["mRec", "var(--warn)"], auc: ["mAuc", "var(--accent-2)"] };
+
+function renderKpi() {
+  const f = modelInfo.final_results || {};
+  const vals = { acc: f.accuracy, prec: f.precision, rec: f.recall, auc: f.roc_auc };
+  for (const [key, [id, color]] of Object.entries(KPI)) {
+    const el = $(id);
+    el.classList.remove("sk");
+    el.textContent = key === "auc" ? num2(vals[key]) : pct(vals[key]);
+    const holder = document.querySelector(`[data-ring="${key}"]`);
+    holder.replaceChildren(ring(vals[key], { color }));
+  }
+}
+
+function renderImportance() {
+  const box = $("importance");
+  box.replaceChildren();
+  const top = (modelInfo.feature_importance || []).slice(0, 10);
+  if (!top.length) { box.append(h("div", { class: "empty", text: "Özellik önemi raporu bulunamadı." })); return; }
+  const max = Math.max(...top.map((i) => i.importance || 0), 0.0001);
+  top.forEach((i, idx) => {
+    const fill = h("span");
+    box.append(h("div", { class: "imp" },
+      h("span", { class: "n", text: String(idx + 1).padStart(2, "0") }),
+      h("span", { class: "f", text: i.feature, title: i.feature }),
+      h("div", { class: "t" }, fill),
+      h("b", { text: pct(i.importance) })));
+    requestAnimationFrame(() => requestAnimationFrame(() => { fill.style.width = ((i.importance || 0) / max) * 100 + "%"; }));
+  });
+}
+
+function renderThresholds() {
+  const rows = (modelInfo.threshold_comparison || [])
+    .filter((r) => Number.isFinite(r.threshold))
+    .slice().sort((a, b) => a.threshold - b.threshold);
+  const body = $("thrRows"), chart = $("thrChart"), legend = $("thrLegend");
+  body.replaceChildren(); chart.replaceChildren(); legend.replaceChildren();
+  if (!rows.length) {
+    const td = h("td", { class: "empty", text: "Eşik raporu bulunamadı.", colspan: "4" });
+    body.append(h("tr", null, td));
+    chart.append(h("div", { class: "empty", text: "Eşik raporu bulunamadı." }));
+    return;
+  }
+  const cur = modelInfo.threshold;
+  rows.forEach((r) => {
+    const isCur = Math.abs(r.threshold - cur) < 1e-9;
+    body.append(h("tr", { class: isCur ? "cur" : "" },
+      h("td", { text: num2(r.threshold) + (isCur ? "  ●" : "") }),
+      h("td", { class: "m", text: num2(r.precision) }),
+      h("td", { class: "m", text: num2(r.recall) }),
+      h("td", { class: "m", text: num2(r.f1_score) })));
+  });
+
+  const W = 480, H = 210, m = { l: 30, r: 10, t: 10, b: 26 };
+  const xs = rows.map((r) => r.threshold), xmin = Math.min(...xs), xmax = Math.max(...xs);
+  const X = (v) => m.l + (xmax === xmin ? 0.5 : (v - xmin) / (xmax - xmin)) * (W - m.l - m.r);
+  const Y = (v) => H - m.b - clamp01(v) * (H - m.t - m.b);
+  const s = svg("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Eşiğe göre precision, recall ve F1" });
+  [0, 0.25, 0.5, 0.75, 1].forEach((g) => {
+    s.append(svg("line", { x1: m.l, x2: W - m.r, y1: Y(g), y2: Y(g), class: "gl" }));
+    const t = svg("text", { x: m.l - 8, y: Y(g) + 3, "text-anchor": "end", class: "ax" }); t.textContent = g.toFixed(2).replace(/0$/, ""); s.append(t);
+  });
+  const step = Math.ceil(rows.length / 8);
+  rows.forEach((r, i) => {
+    if (i % step) return;
+    const t = svg("text", { x: X(r.threshold), y: H - 8, "text-anchor": "middle", class: "ax" }); t.textContent = num2(r.threshold); s.append(t);
+  });
+  if (cur >= xmin && cur <= xmax) s.append(svg("line", { x1: X(cur), x2: X(cur), y1: m.t, y2: H - m.b, class: "cur" }));
+  const series = [["precision", "Precision", "var(--ok)"], ["recall", "Recall", "var(--warn)"], ["f1_score", "F1", "var(--accent)"]];
+  series.forEach(([key, label, color]) => {
+    const pts = rows.filter((r) => Number.isFinite(r[key]));
+    if (!pts.length) return;
+    s.append(svg("path", { d: pts.map((r, i) => (i ? "L" : "M") + X(r.threshold).toFixed(1) + " " + Y(r[key]).toFixed(1)).join(" "), fill: "none", stroke: color, "stroke-width": 2.4, "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    pts.forEach((r) => s.append(svg("circle", { cx: X(r.threshold), cy: Y(r[key]), r: 3.5, fill: "var(--surface)", stroke: color, "stroke-width": 2 })));
+    legend.append(h("span", null, h("i", { style: `background:${color}` }), label));
+  });
+  legend.append(h("span", null, h("i", { style: "background:var(--ink);opacity:.65" }), "Karar eşiği"));
+  chart.append(s);
+}
+
+function renderModel() {
+  renderKpi(); renderImportance(); renderThresholds();
+  $("mdlName").textContent = modelInfo.model_name || "—";
+  $("mdlFeat").textContent = (modelInfo.features || []).length;
+  $("mdlThr").textContent = num2(modelInfo.threshold);
+  buildForm();
+}
+
+/* ═════════ KOD ANALİZİ LOGIC ═════════ */
+let selected = [];
+const EXT_RE = /\.(java|py|c|h|cpp|cc|hpp|cs|js|ts|go|php|rb|swift|kt|scala|rs|lua|zip)$/i;
+const fmtSize = (n) => (n < 1024 ? n + " B" : n < 1048576 ? (n / 1024).toFixed(1) + " KB" : (n / 1048576).toFixed(1) + " MB");
+
+function addFiles(files) {
+  const valid = files.filter((f) => EXT_RE.test(f.name));
+  if (valid.length !== files.length) toast("Bazı dosyalar eklenmedi", "Desteklenen kod dosyaları veya .zip seç.");
+  selected = [...selected, ...valid].filter((f, i, a) => a.findIndex((x) => x.name === f.name && x.size === f.size) === i);
+  renderFiles();
+}
+function renderFiles() {
+  const list = $("fileList");
+  list.replaceChildren();
+  selected.forEach((f, i) => {
+    const ext = (f.name.split(".").pop() || "").toUpperCase().slice(0, 4);
+    list.append(h("div", { class: "file" },
+      h("div", { class: "ext", text: ext }),
+      h("div", { class: "meta" }, h("b", { text: f.name, title: f.name }), h("small", { text: fmtSize(f.size) })),
+      h("button", { class: "rm", "aria-label": f.name + " dosyasını kaldır", text: "×", onclick: () => { selected.splice(i, 1); renderFiles(); } })));
+  });
+  $("fileCount").textContent = selected.length + " dosya seçildi";
+  $("scanBtn").disabled = !selected.length;
+}
+$("pick").onclick = () => $("fileInput").click();
+$("fileInput").addEventListener("change", (e) => { addFiles([...e.target.files]); e.target.value = ""; });
+const drop = $("drop");
+drop.addEventListener("dragover", (e) => { e.preventDefault(); drop.classList.add("drag"); });
+drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+drop.addEventListener("drop", (e) => { e.preventDefault(); drop.classList.remove("drag"); addFiles([...e.dataTransfer.files]); });
+
+function complexityStyle(v) {
+  if (v >= 20) return ["var(--bad)", "b-bad"];
+  if (v >= 10) return ["var(--hot)", "b-hot"];
+  if (v >= 5) return ["var(--warn)", "b-warn"];
+  return ["var(--ok)", "b-ok"];
+}
+
+function renderScan(data) {
+  const body = $("scanBody");
+  body.replaceChildren();
+  const s = data.summary || {};
+  const stats = h("div", { class: "stats" });
+  [["Kaynak dosya", s.file_count], ["Toplam metot", s.method_count], ["Uzun dosya", s.long_file_count], ["Karmaşık metot", s.complex_method_count]]
+    .forEach(([label, v]) => stats.append(h("div", { class: "stat" }, h("small", { text: label }), h("b", { text: v ?? "—" }))));
+  body.append(stats);
+
+  const files = (data.files || []).slice().sort((a, b) => b.max_method_complexity - a.max_method_complexity);
+  const maxC = Math.max(...files.map((f) => f.max_method_complexity || 0), 1);
+  const tbody = h("tbody");
+  const count = h("span", { class: "hint" });
+  const LIMIT = 50;
+
+  function draw(q) {
+    tbody.replaceChildren();
+    const term = q.trim().toLowerCase();
+    const filtered = files.filter((f) => !term || String(f.file).toLowerCase().includes(term) || String(f.language || "").toLowerCase().includes(term));
+    filtered.slice(0, LIMIT).forEach((f) => {
+      const [color, cls] = complexityStyle(f.max_method_complexity || 0);
+      const warns = (f.warnings || []).length
+        ? h("div", { class: "warns" }, f.warnings.map((w) => h("span", { class: "badge b-warn", text: w })))
+        : h("span", { class: "badge b-ok", text: "Temiz" });
+      tbody.append(h("tr", null,
+        h("td", null, h("span", { class: "path", text: f.file })),
+        h("td", null, h("span", { class: "badge b-mute", text: (f.language || "—").toUpperCase() })),
+        h("td", { class: "m", text: f.non_empty_lines ?? "—" }),
+        h("td", { class: "m", text: f.method_count ?? "—" }),
+        h("td", null, h("div", { class: "cx" },
+          h("div", { class: "bar" }, h("span", { style: `width:${((f.max_method_complexity || 0) / maxC) * 100}%;background:${color}` })),
+          h("span", { class: "badge " + cls, text: f.max_method_complexity ?? "—" }))),
+        h("td", null, warns)));
+    });
+    if (!filtered.length) tbody.append(h("tr", null, h("td", { colspan: "6", class: "empty", text: "Eşleşen dosya yok." })));
+    count.textContent = filtered.length > LIMIT ? `${LIMIT} / ${filtered.length} dosya gösteriliyor` : `${filtered.length} dosya`;
+  }
+
+  const search = h("input", { class: "search", type: "search", placeholder: "Dosya veya dil ara…", "aria-label": "Dosya ara" });
+  search.addEventListener("input", () => draw(search.value));
+  body.append(h("div", { class: "tools" }, search, count));
+  body.append(h("div", { class: "tbl-wrap" }, h("table", null,
+    h("thead", null, h("tr", null,
+      h("th", { text: "Dosya" }), h("th", { text: "Dil" }), h("th", { class: "m", text: "Satır" }),
+      h("th", { class: "m", text: "Metot" }), h("th", { text: "En yüksek karmaşıklık" }), h("th", { text: "Uyarı" }))),
+    tbody)));
+  body.append(h("div", { class: "note" }, h("span", { text: "Statik analiz tamamlandı. Karmaşıklık renk kodları: <5 düşük, 5–9 orta, 10–19 yüksek, 20+ çok yüksek." })));
+  draw("");
+}
+
+$("scanBtn").onclick = async () => {
+  const btn = $("scanBtn"), res = $("scanResult"), body = $("scanBody");
+  res.style.display = "block";
+  body.replaceChildren(h("div", { class: "empty" }, "Analiz yapılıyor… Büyük projelerde işlem biraz sürebilir."));
+  btn.disabled = true; btn.textContent = "Analiz ediliyor…";
+  try {
+    const form = new FormData();
+    selected.forEach((f) => form.append("files", f));
+    const data = await api("/api/analyze", { method: "POST", body: form }, 120000);
+    renderScan(data);
+    saveHistory(data);
+    toast("Analiz tamamlandı", `${data.summary.file_count} kaynak dosyası incelendi.`);
+  } catch (err) {
+    body.replaceChildren(h("div", { class: "empty" }, "Analiz hatası: " + err.message + ". Backend aktif mi?"));
+    toast("Analiz yapılamadı", err.message);
+  } finally {
+    btn.disabled = !selected.length; btn.textContent = "Analizi başlat";
+    res.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+};
+
+/* ═════════ RAPOR HAFIZASI LOGIC ═════════ */
+const HKEY = "cr-history";
+function loadHistory() { try { return JSON.parse(localStorage.getItem(HKEY) || "[]"); } catch (e) { return []; } }
+function saveHistory(data) {
+  const s = data.summary || {};
+  const list = loadHistory();
+  list.unshift({ t: Date.now(), files: s.file_count, methods: s.method_count, long: s.long_file_count, complex: s.complex_method_count, names: (data.files || []).slice(0, 3).map((f) => f.file) });
+  try { localStorage.setItem(HKEY, JSON.stringify(list.slice(0, 20))); } catch (e) {}
+}
+function renderHistory() {
+  const body = $("histBody"), list = loadHistory();
+  body.replaceChildren();
+  $("clearHist").style.display = list.length ? "" : "none";
+  if (!list.length) {
+    body.append(h("div", { class: "card big-empty" },
+      h("div", { class: "ic" }, svg("svg", { viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", "stroke-width": 2, "stroke-linecap": "round", "stroke-linejoin": "round" }, svg("path", { d: "M7 3h8l4 4v14H7z" }), svg("path", { d: "M15 3v4h4M10 12h6M10 16h6" }))),
+      h("h2", { text: "Henüz kayıtlı rapor yok" }),
+      h("p", { text: "İlk kod analizinizi başlattığınızda özet verileri burada arşivlenecektir." }),
+      h("button", { class: "btn accent", text: "İlk analizi başlat", onclick: () => { location.hash = "analysis"; } })));
+    return;
+  }
+  const wrap = h("div", { class: "hist" });
+  list.forEach((r) => {
+    const names = (r.names || []).join(", ");
+    wrap.append(h("div", { class: "hist-i" },
+      h("div", { class: "d" }, h("b", { text: new Date(r.t).toLocaleString("tr-TR", { dateStyle: "medium", timeStyle: "short" }) }), h("small", { text: names || "—" })),
+      ...[["Dosya", r.files], ["Metot", r.methods], ["Uzun dosya", r.long], ["Karmaşık", r.complex]].map(([l, v]) => h("div", { class: "v" }, h("b", { text: v ?? "—" }), h("small", { text: l })))));
+  });
+  body.append(wrap);
+}
+$("clearHist").onclick = () => { try { localStorage.removeItem(HKEY); } catch (e) {} renderHistory(); toast("Geçmiş temizlendi"); };
+
+/* ═════════ MODEL TAHMİN LOGIC ═════════ */
+const inputs = {};
+let actual = null;
+const LEVELS = {
+  "Dusuk": ["Düşük", "b-ok", "var(--ok)"],
+  "Orta": ["Orta", "b-warn", "var(--warn)"],
+  "Yuksek": ["Yüksek", "b-hot", "var(--hot)"],
+  "Cok yuksek": ["Çok yüksek", "b-bad", "var(--bad)"],
+};
+
+function buildForm() {
+  const form = $("featureForm");
+  form.replaceChildren();
+  (modelInfo.features || []).forEach((name) => {
+    const input = h("input", { type: "number", step: "any", value: "0", id: "f_" + name });
+    input.addEventListener("input", () => { actual = null; });
+    inputs[name] = input;
+    form.append(h("div", { class: "fld" }, h("label", { for: "f_" + name, text: name, title: name }), input));
+  });
+  ["sampleBtn", "resetBtn", "predictBtn"].forEach((id) => ($(id).disabled = false));
+}
+function fillInputs(metrics) {
+  Object.keys(inputs).forEach((k) => { inputs[k].value = metrics && metrics[k] != null ? metrics[k] : 0; });
+}
+
+function renderResult(res) {
+  const [label, badge, color] = LEVELS[res.risk_level] || [res.risk_level, "b-warn", "var(--warn)"];
+  const prob = Number(res.defect_probability) || 0;
+  const box = $("result");
+  box.replaceChildren();
+  const rg = h("div", { class: "res-ring" }, ring(prob / 100, { size: 164, stroke: 11, color }),
+    h("div", { class: "c" }, h("b", { text: "%" + prob }), h("small", { text: "kusur olasılığı" })));
+  const meterFill = h("span", { style: `width:0;background:${color}` });
+  const meter = h("div", { class: "meter" }, meterFill, h("i", { style: `left:calc(${(res.threshold * 100).toFixed(1)}% - 1.5px)` }));
+  requestAnimationFrame(() => requestAnimationFrame(() => { meterFill.style.width = Math.min(100, Math.max(0, prob)) + "%"; }));
+  box.append(h("div", { class: "res" },
+    rg,
+    h("div", { class: "res-badges" },
+      h("span", { class: "badge " + (res.prediction === "Kusurlu" ? "b-bad" : "b-ok"), text: res.prediction }),
+      h("span", { class: "badge " + badge, text: "Risk: " + label })),
+    meter,
+    h("div", { class: "meter-n", text: "Dikey çizgi karar eşiğini gösterir (%" + Math.round(res.threshold * 100) + ")." }),
+    actual !== null ? h("div", { class: "actual", text: "Bu örneğin veri setindeki gerçek etiketi: " + (actual ? "Kusurlu" : "Kusursuz") }) : null));
+}
+
+async function runPredict() {
+  const metrics = {};
+  for (const k of Object.keys(inputs)) {
+    const v = parseFloat(inputs[k].value);
+    if (Number.isNaN(v)) { toast("Eksik değer", k + " alanına sayısal değer girin."); inputs[k].focus(); return false; }
+    metrics[k] = v;
+  }
+  const btn = $("predictBtn");
+  btn.disabled = true; btn.textContent = "Hesaplanıyor…";
+  try {
+    const res = await api("/api/predict", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(metrics) });
+    renderResult(res);
+    return true;
+  } catch (err) { toast("Tahmin yapılamadı", err.message); return false; }
+  finally { btn.disabled = false; btn.textContent = "Tahmin et"; }
+}
+$("predictBtn").onclick = runPredict;
+$("resetBtn").onclick = () => {
+  fillInputs(null); actual = null;
+  $("result").replaceChildren(h("div", { class: "res-empty" }, h("b", { text: "Henüz tahmin yapılmadı" }), h("span", { text: "Metrikleri girip “Tahmin et” butonuna basın." })));
+};
+$("sampleBtn").onclick = async () => {
+  try {
+    const s = await api("/api/sample");
+    fillInputs(s.metrics);
+    actual = null;
+    const ok = await runPredict();
+    if (ok) { actual = !!s.actual_defect; renderResultActual(); }
+  } catch (err) { toast("Örnek yüklenemedi", err.message); }
+};
+function renderResultActual() {
+  const r = $("result").querySelector(".res");
+  if (!r || r.querySelector(".actual")) return;
+  r.append(h("div", { class: "actual", text: "Bu örneğin veri setindeki gerçek etiketi: " + (actual ? "Kusurlu" : "Kusursuz") }));
+}
+
+/* ═════════ INIT / BAŞLATMA ═════════ */
+let waking;
+async function loadModel() {
+  $("offline").classList.remove("show");
+  setApi("wait", "Bağlanılıyor…");
+  waking = setTimeout(() => setApi("wait", "Sunucu uyanıyor…"), 4000);
+  try {
+    await api("/api/health", null, 75000);
+    clearTimeout(waking);
+    setApi("ok", "Backend aktif");
+  } catch (e) {
+    clearTimeout(waking);
+    setApi("fail", "Bağlantı yok");
+    $("offlineText").textContent = "Backend'e ulaşılamıyor (" + e.message + "). Sunucu uykuda olabilir, birkaç saniye sonra tekrar deneyin.";
+    $("offline").classList.add("show");
+    return;
+  }
+  try {
+    modelInfo = await api("/api/model-info");
+    renderModel();
+  } catch (e) {
+    setApi("fail", "Model yüklenemedi");
+    toast("Model yüklenemedi", e.message);
+  }
+}
+$("retryBtn").onclick = loadModel;
+
+renderFiles();
+navigate(location.hash.slice(1));
 loadModel();
-</script></body></html>
+</script>
+</body>
+</html>
